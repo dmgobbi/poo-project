@@ -1,0 +1,74 @@
+classDiagram
+    class ProcessadorEleicao {
+        -LeitorArquivo leitor
+        -List~Partido~ partidos
+        -List~Candidato~ candidatos
+        -Date dataEleicao
+        +ProcessadorEleicao(String codMunicipio, String arquivoCandidatos, String arquivoVotacao, String dataEleicao)
+        +processarDados()
+        -carregarCandidatos()
+        -carregarVotacao()
+        -calcularEleitos()
+    }
+
+    class LeitorArquivo {
+        -String encoding
+        -String separator
+        +List~String[]~ lerCSV(String filepath)
+        -validarArquivo(String filepath)
+    }
+
+    class Candidato {
+        -String numero
+        -String nomeUrna
+        -Partido partido
+        -LocalDate dataNascimento
+        -int votosNominais
+        -boolean eleito
+        -Genero genero
+        -int numeroFederacao
+        +int getIdade(LocalDate dataRef)
+        +void addVotos(int votos)
+    }
+
+    class Partido {
+        -int numero
+        -String sigla
+        -List~Candidato~ candidatos
+        -int votosLegenda
+        -int votosTotais
+        +void addCandidato(Candidato candidato)
+        +void addVotosLegenda(int votos)
+        +int getVotosTotais()
+    }
+
+    class RelatorioFactory {
+        +Relatorio criarRelatorio(TipoRelatorio tipo)
+    }
+
+    class Relatorio {
+        <<interface>>
+        +void gerarRelatorio()
+    }
+
+    class CandidatoComparator {
+        <<interface>>
+        +int compare(Candidato c1, Candidato c2)
+    }
+
+    class VotosComparator {
+        +int compare(Candidato c1, Candidato c2)
+    }
+
+    class IdadeComparator {
+        +int compare(Candidato c1, Candidato c2)
+    }
+
+    ProcessadorEleicao --> LeitorArquivo
+    ProcessadorEleicao --> RelatorioFactory
+    ProcessadorEleicao --> "*" Partido
+    Partido --> "*" Candidato
+    RelatorioFactory --> Relatorio
+    ProcessadorEleicao --> CandidatoComparator
+    CandidatoComparator <|-- VotosComparator
+    CandidatoComparator <|-- IdadeComparator
