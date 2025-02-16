@@ -161,4 +161,9 @@ public class ProcessadorEleicao {
     public Map<String, Candidato> getCandidatos() {
         return Collections.unmodifiableMap(candidatos);
     }
+
+    public int getTotalVotosNominais() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTotalVotosNominais'");
+    }
 }

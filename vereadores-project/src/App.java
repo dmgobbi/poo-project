@@ -1,8 +1,8 @@
 import model.LeitorArquivo;
 import model.ProcessadorEleicao;
+import model.GeradorRelatorio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -31,29 +31,14 @@ public class App {
             ProcessadorEleicao processador = new ProcessadorEleicao(codigoMunicipio, dataEleicao);
 
             // Ler e processar arquivo de candidatos
-            List<String[]> registrosCandidatos = leitor.lerCSV(arquivoCandidatos);
-            processador.processarArquivoCandidatos(registrosCandidatos);
+            processador.processarArquivoCandidatos(leitor.lerCSV(arquivoCandidatos));
 
             // Ler e processar arquivo de votação
-            List<String[]> registrosVotacao = leitor.lerCSV(arquivoVotacao);
-            processador.processarArquivoVotacao(registrosVotacao);
+            processador.processarArquivoVotacao(leitor.lerCSV(arquivoVotacao));
 
-            // Imprimir resultados iniciais para teste
-            System.out.println("\nRelatório inicial de teste:");
-            System.out.println("---------------------------");
-            System.out.println("Número de vagas: " + processador.getCandidatosEleitos().size());
-            System.out.println("Total de votos válidos: " + processador.getTotalVotosValidos());
-            
-            System.out.println("\nPrimeiros candidatos eleitos:");
-            processador.getCandidatosEleitos().stream()
-                .limit(5)
-                .forEach(c -> System.out.println("- " + c.toString()));
-
-            System.out.println("\nPrimeiros partidos por número de votos:");
-            processador.getPartidosOrdenadosPorVotos().stream()
-                .limit(5)
-                .forEach(p -> System.out.println(String.format("- %s: %d votos totais (%d votos de legenda)",
-                    p.toString(), p.getVotosTotais(), p.getVotosLegenda())));
+            // Gerar relatórios
+            GeradorRelatorio gerador = new GeradorRelatorio(processador);
+            gerador.gerarRelatorioCompleto();
 
         } catch (Exception e) {
             System.err.println("Erro durante a execução: " + e.getMessage());
