@@ -5,6 +5,36 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ProcessadorEleicao {
+    // Constantes para colunas do arquivo de candidatos
+    private static final int SG_UE = 11;
+    private static final int CD_CARGO = 13;
+    private static final int NR_CANDIDATO = 16;
+    private static final int NM_URNA_CANDIDATO = 18;
+    private static final int NR_PARTIDO = 25;
+    private static final int SG_PARTIDO = 26;
+    private static final int NR_FEDERACAO = 28;
+    private static final int DT_NASCIMENTO = 36;
+    private static final int CD_GENERO = 38;
+    private static final int CD_SIT_TOT_TURNO = 48;
+
+    // Valores específicos para validação
+    private static final String CARGO_VEREADOR = "13";
+    private static final String CANDIDATO_INVALIDO = "-1";
+    private static final String CANDIDATO_ELEITO = "2";
+    private static final String CANDIDATO_ELEITO_MEDIA = "3";
+
+    // Constantes para colunas do arquivo de votação
+    private static final int CD_MUNICIPIO = 13;
+    private static final int CD_CARGO_VOTACAO = 17;
+    private static final int NR_VOTAVEL = 19;
+    private static final int QT_VOTOS = 21;
+
+    // Constantes para tipos de votos
+    private static final String VOTO_BRANCO = "95";
+    private static final String VOTO_NULO = "96";
+    private static final String VOTO_ANULADO_97 = "97";
+    private static final String VOTO_ANULADO_98 = "98"; // verificar na documentacao
+
     private final String codigoMunicipio;
     private final LocalDate dataEleicao;
     private final Map<String, Partido> partidos;
@@ -23,18 +53,18 @@ public class ProcessadorEleicao {
     
     public void processarArquivoCandidatos(List<String[]> registros) {
         for (String[] registro : registros) {
-            if (!registro[0].equals(codigoMunicipio) || !registro[1].equals("13")) {
+            if (!registro[SG_UE].equals(codigoMunicipio) || !registro[CD_CARGO].equals(CARGO_VEREADOR)) {
                 continue; // Ignora registros de outros municípios ou cargos
             }
             
             // Ignora candidatos com situação inválida
-            if (registro[8].equals("-1")) {
+            if (registro[CD_SIT_TOT_TURNO].equals(CANDIDATO_INVALIDO)) {
                 continue;
             }
             
             // Processa partido
-            int numeroPartido = Integer.parseInt(registro[4]);
-            String siglaPartido = registro[5];
+            int numeroPartido = Integer.parseInt(registro[NR_PARTIDO]);
+            String siglaPartido = registro[SG_PARTIDO];
             Partido partido = partidos.computeIfAbsent(
                 String.valueOf(numeroPartido),
                 k -> new Partido(numeroPartido, siglaPartido)
@@ -42,13 +72,13 @@ public class ProcessadorEleicao {
             
             // Processa candidato
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dataNascimento = LocalDate.parse(registro[7], formatter);
-            Genero genero = Genero.fromCodigo(Integer.parseInt(registro[9]));
-            int numeroFederacao = Integer.parseInt(registro[6]);
+            LocalDate dataNascimento = LocalDate.parse(registro[DT_NASCIMENTO], formatter);
+            Genero genero = Genero.fromCodigo(Integer.parseInt(registro[CD_GENERO]));
+            int numeroFederacao = Integer.parseInt(registro[NR_FEDERACAO]);
             
             Candidato candidato = new Candidato(
-                registro[2],      // número candidato
-                registro[3],      // nome urna
+                registro[NR_CANDIDATO],      // número candidato
+                registro[NM_URNA_CANDIDATO],      // nome urna
                 partido,          // partido
                 dataNascimento,   // data nascimento
                 genero,          // gênero
@@ -59,23 +89,23 @@ public class ProcessadorEleicao {
             candidatos.put(candidato.getNumero(), candidato);
             
             // Define se foi eleito
-            boolean eleito = registro[8].equals("2") || registro[8].equals("3");
+            boolean eleito = registro[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO) || registro[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO_MEDIA);
             candidato.setEleito(eleito);
         }
     }
     
     public void processarArquivoVotacao(List<String[]> registros) {
         for (String[] registro : registros) {
-            if (!registro[1].equals(codigoMunicipio) || !registro[0].equals("13")) {
+            if (!registro[CD_MUNICIPIO].equals(codigoMunicipio) || !registro[CD_CARGO_VOTACAO].equals(CARGO_VEREADOR)) {
                 continue; // Ignora registros de outros municípios ou cargos
             }
             
-            String numeroVotavel = registro[2];
-            int qtdVotos = Integer.parseInt(registro[3]);
+            String numeroVotavel = registro[NR_VOTAVEL];
+            int qtdVotos = Integer.parseInt(registro[QT_VOTOS]);
             
             // Ignora votos brancos/nulos
-            if (numeroVotavel.equals("95") || numeroVotavel.equals("96") || 
-                numeroVotavel.equals("97") || numeroVotavel.equals("98")) {
+            if (numeroVotavel.equals(VOTO_BRANCO) || numeroVotavel.equals(VOTO_NULO) || 
+                numeroVotavel.equals(VOTO_ANULADO_97) || numeroVotavel.equals(VOTO_ANULADO_98)) {
                 continue;
             }
             
