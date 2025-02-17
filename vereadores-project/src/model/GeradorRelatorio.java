@@ -10,12 +10,10 @@ import java.util.Comparator;
 public class GeradorRelatorio {
     private final ProcessadorEleicao processador;
     private final DecimalFormat df;
-    private final DecimalFormat dfPct;
 
     public GeradorRelatorio(ProcessadorEleicao processador) {
         this.processador = processador;
         this.df = new DecimalFormat("#,##0");
-        this.dfPct = new DecimalFormat("0.00");
     }
 
     public void gerarRelatorioCompleto() {

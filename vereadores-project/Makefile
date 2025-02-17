@@ -42,5 +42,6 @@ clean:
 	$(RM) $(MANIFEST)
 
 # Example usage: make run ARGS="13 candidatos.csv votacao.csv 15/11/2020"
+# Another example: make run ARGS="57053 ../consulta_cand_2024/consulta_cand_2024_ES.csv ../votacao_secao_2024_SIGLA-UF/votacao_secao_2024_ES.csv 06/10/2024" > output.txt
 run: jar
-	$(JAVA) -Xmx4g -jar $(JAR_NAME) $(ARGS)
+	$(JAVA) -jar $(JAR_NAME) $(ARGS)

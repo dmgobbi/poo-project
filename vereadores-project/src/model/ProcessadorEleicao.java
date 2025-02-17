@@ -163,7 +163,6 @@ public class ProcessadorEleicao {
     }
 
     public int getTotalVotosNominais() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTotalVotosNominais'");
+        return totalVotosNominais;
     }
 }
