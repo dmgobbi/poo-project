@@ -4,7 +4,7 @@ import model.GeradorRelatorio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class App {
+public class Main {
     public static void main(String[] args) {
         if (args.length != 4) {
             System.out.println("Uso: java -jar vereadores.jar <codigo_municipio> <arquivo_candidatos> <arquivo_votacao> <data_eleicao>");

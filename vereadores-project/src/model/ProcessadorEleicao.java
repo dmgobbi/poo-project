@@ -41,7 +41,7 @@ public class ProcessadorEleicao {
     private final Map<String, Candidato> candidatos;
     private int totalVotosNominais;
     private int totalVotosLegenda;
-    
+
     public ProcessadorEleicao(String codigoMunicipio, LocalDate dataEleicao) {
         this.codigoMunicipio = codigoMunicipio;
         this.dataEleicao = dataEleicao;
@@ -75,7 +75,7 @@ public class ProcessadorEleicao {
             LocalDate dataNascimento = LocalDate.parse(registro[DT_NASCIMENTO], formatter);
             Genero genero = Genero.fromCodigo(Integer.parseInt(registro[CD_GENERO]));
             int numeroFederacao = Integer.parseInt(registro[NR_FEDERACAO]);
-            
+
             Candidato candidato = new Candidato(
                 registro[NR_CANDIDATO],      // número candidato
                 registro[NM_URNA_CANDIDATO],      // nome urna
@@ -84,7 +84,7 @@ public class ProcessadorEleicao {
                 genero,          // gênero
                 numeroFederacao  // número federação
             );
-            
+
             partido.addCandidato(candidato);
             candidatos.put(candidato.getNumero(), candidato);
             
