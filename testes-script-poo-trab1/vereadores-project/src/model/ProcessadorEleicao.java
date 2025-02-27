@@ -50,79 +50,75 @@ public class ProcessadorEleicao {
         this.totalVotosNominais = 0;
         this.totalVotosLegenda = 0;
     }
-    
-    public void processarArquivoCandidatos(List<String[]> registros) {
-        for (String[] registro : registros) {
-            if (!registro[SG_UE].equals(codigoMunicipio) || !registro[CD_CARGO].equals(CARGO_VEREADOR)) {
-                continue; // Ignora registros de outros municípios ou cargos
-            }
-            
-            // Ignora candidatos com situação inválida
-            if (registro[CD_SIT_TOT_TURNO].equals(CANDIDATO_INVALIDO)) {
-                continue;
-            }
-            
-            // Processa partido
-            int numeroPartido = Integer.parseInt(registro[NR_PARTIDO]);
-            String siglaPartido = registro[SG_PARTIDO];
-            Partido partido = partidos.computeIfAbsent(
-                String.valueOf(numeroPartido),
-                k -> new Partido(numeroPartido, siglaPartido)
-            );
-            
-            // Processa candidato
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dataNascimento = LocalDate.parse(registro[DT_NASCIMENTO], formatter);
-            Genero genero = Genero.fromCodigo(Integer.parseInt(registro[CD_GENERO]));
-            int numeroFederacao = Integer.parseInt(registro[NR_FEDERACAO]);
-
-            Candidato candidato = new Candidato(
-                registro[NR_CANDIDATO],      // número candidato
-                registro[NM_URNA_CANDIDATO],      // nome urna
-                partido,          // partido
-                dataNascimento,   // data nascimento
-                genero,          // gênero
-                numeroFederacao  // número federação
-            );
-
-            partido.addCandidato(candidato);
-            candidatos.put(candidato.getNumero(), candidato);
-            
-            // Define se foi eleito
-            boolean eleito = registro[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO) || registro[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO_MEDIA);
-            candidato.setEleito(eleito);
+    public void processarLinhaCandidato(String[] campos) {
+        if (!campos[SG_UE].equals(codigoMunicipio) || !campos[CD_CARGO].equals(CARGO_VEREADOR)) {
+            return; // Ignora registros de outros municípios ou cargos
         }
+        
+        // Ignora candidatos com situação inválida
+        if (campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_INVALIDO)) {
+            return;
+        }
+        
+        // Processa partido
+        int numeroPartido = Integer.parseInt(campos[NR_PARTIDO]);
+        String siglaPartido = campos[SG_PARTIDO];
+        Partido partido = partidos.computeIfAbsent(
+            String.valueOf(numeroPartido),
+            k -> new Partido(numeroPartido, siglaPartido)
+        );
+        
+        // Processa candidato
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataNascimento = LocalDate.parse(campos[DT_NASCIMENTO], formatter);
+        Genero genero = Genero.fromCodigo(Integer.parseInt(campos[CD_GENERO]));
+        int numeroFederacao = Integer.parseInt(campos[NR_FEDERACAO]);
+    
+        Candidato candidato = new Candidato(
+            campos[NR_CANDIDATO],      // número candidato
+            campos[NM_URNA_CANDIDATO], // nome urna
+            partido,                   // partido
+            dataNascimento,            // data nascimento
+            genero,                    // gênero
+            numeroFederacao            // número federação
+        );
+    
+        partido.addCandidato(candidato);
+        candidatos.put(candidato.getNumero(), candidato);
+        
+        // Define se foi eleito
+        boolean eleito = campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO) || 
+                         campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO_MEDIA);
+        candidato.setEleito(eleito);
     }
     
-    public void processarArquivoVotacao(List<String[]> registros) {
-        for (String[] registro : registros) {
-            if (!registro[CD_MUNICIPIO].equals(codigoMunicipio) || !registro[CD_CARGO_VOTACAO].equals(CARGO_VEREADOR)) {
-                continue; // Ignora registros de outros municípios ou cargos
+    public void processarLinhaVotacao(String[] campos) {
+        if (!campos[CD_MUNICIPIO].equals(codigoMunicipio) || !campos[CD_CARGO_VOTACAO].equals(CARGO_VEREADOR)) {
+            return; // Ignora registros de outros municípios ou cargos
+        }
+        
+        String numeroVotavel = campos[NR_VOTAVEL];
+        int qtdVotos = Integer.parseInt(campos[QT_VOTOS]);
+        
+        // Ignora votos brancos/nulos
+        if (numeroVotavel.equals(VOTO_BRANCO) || numeroVotavel.equals(VOTO_NULO) || 
+            numeroVotavel.equals(VOTO_ANULADO_97) || numeroVotavel.equals(VOTO_ANULADO_98)) {
+            return;
+        }
+        
+        // Verifica se é voto de legenda (2 dígitos) ou nominal (5 dígitos)
+        if (numeroVotavel.length() == 2) {
+            Partido partido = partidos.get(numeroVotavel);
+            if (partido != null) {
+                partido.addVotosLegenda(qtdVotos);
+                totalVotosLegenda += qtdVotos;
             }
-            
-            String numeroVotavel = registro[NR_VOTAVEL];
-            int qtdVotos = Integer.parseInt(registro[QT_VOTOS]);
-            
-            // Ignora votos brancos/nulos
-            if (numeroVotavel.equals(VOTO_BRANCO) || numeroVotavel.equals(VOTO_NULO) || 
-                numeroVotavel.equals(VOTO_ANULADO_97) || numeroVotavel.equals(VOTO_ANULADO_98)) {
-                continue;
-            }
-            
-            // Verifica se é voto de legenda (2 dígitos) ou nominal (5 dígitos)
-            if (numeroVotavel.length() == 2) {
-                Partido partido = partidos.get(numeroVotavel);
-                if (partido != null) {
-                    partido.addVotosLegenda(qtdVotos);
-                    totalVotosLegenda += qtdVotos;
-                }
-            } else {
-                Candidato candidato = candidatos.get(numeroVotavel);
-                if (candidato != null) {
-                    candidato.addVotos(qtdVotos);
-                    candidato.getPartido().addVotosNominais(qtdVotos);
-                    totalVotosNominais += qtdVotos;
-                }
+        } else {
+            Candidato candidato = candidatos.get(numeroVotavel);
+            if (candidato != null) {
+                candidato.addVotos(qtdVotos);
+                candidato.getPartido().addVotosNominais(qtdVotos);
+                totalVotosNominais += qtdVotos;
             }
         }
     }

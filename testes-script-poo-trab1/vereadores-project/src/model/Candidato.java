@@ -1,6 +1,9 @@
 package model;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Locale;
 
 public class Candidato {
     private final String numero;
@@ -79,8 +82,14 @@ public class Candidato {
 
     @Override
     public String toString() {
-        String prefixo = participaFederacao() ? "*" : "";
-        return String.format("%s%s (%s, %d votos)", 
-            prefixo, nomeUrna, partido.getSigla(), votosNominais);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+        symbols.setGroupingSeparator('.');
+        DecimalFormat df = new DecimalFormat("#,##0", symbols);
+        
+        return String.format("%s%s (%s, %s votos)",
+            participaFederacao() ? "*" : "",
+            nomeUrna,
+            partido.getSigla(),
+            df.format(votosNominais));
     }
 }

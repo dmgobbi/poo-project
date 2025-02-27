@@ -1,19 +1,21 @@
 package model;
 
 import java.util.List;
-// import java.util.Map;
-// import java.util.stream.Collectors;
+import java.util.Locale;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.text.DecimalFormatSymbols;
 
 public class GeradorRelatorio {
     private final ProcessadorEleicao processador;
     private final DecimalFormat df;
-
+    
     public GeradorRelatorio(ProcessadorEleicao processador) {
         this.processador = processador;
-        this.df = new DecimalFormat("#,##0");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+        symbols.setGroupingSeparator('.');
+        this.df = new DecimalFormat("#,##0", symbols);
     }
 
     public void gerarRelatorioCompleto() {
@@ -120,8 +122,8 @@ public class GeradorRelatorio {
                 df.format(votosNominais),
                 df.format(p.getVotosLegenda()),
                 p.getCandidatosEleitos().size(),
-                p.getCandidatosEleitos().size() == 1 ? "" : "s",
-                p.getCandidatosEleitos().size() == 1 ? "" : "s");
+                p.getCandidatosEleitos().size() <= 1 ? "" : "s",
+                p.getCandidatosEleitos().size() <= 1 ? "" : "s");
         }
         System.out.println();
     }

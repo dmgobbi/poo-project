@@ -2,16 +2,16 @@ package model;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LeitorArquivo {
     private static final String ENCODING = "ISO-8859-1";
     private static final String SEPARATOR = ";";
 
-    public List<String[]> lerCSV(String filepath) throws Exception {
-        List<String[]> registros = new ArrayList<>();
-        
+    public interface LinhaCallback {
+        void processarLinha(String[] campos);
+    }
+    
+    public void processarCSV(String filepath, LinhaCallback callback) throws Exception {
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(filepath), ENCODING))) {
@@ -29,11 +29,10 @@ public class LeitorArquivo {
                     campos[i] = campos[i].trim();
                 }
                 
-                registros.add(campos);
+                callback.processarLinha(campos);
+                linha = null; // ajuda o GC
             }
         }
-        
-        return registros;
     }
 
     public void validarArquivo(String filepath) throws Exception {

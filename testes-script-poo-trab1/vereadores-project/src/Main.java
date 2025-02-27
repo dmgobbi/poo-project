@@ -31,10 +31,14 @@ public class Main {
             ProcessadorEleicao processador = new ProcessadorEleicao(codigoMunicipio, dataEleicao);
 
             // Ler e processar arquivo de candidatos
-            processador.processarArquivoCandidatos(leitor.lerCSV(arquivoCandidatos));
+            leitor.processarCSV(arquivoCandidatos, campos -> {
+                processador.processarLinhaCandidato(campos);
+            });
 
             // Ler e processar arquivo de votação
-            processador.processarArquivoVotacao(leitor.lerCSV(arquivoVotacao));
+            leitor.processarCSV(arquivoVotacao, campos -> {
+                processador.processarLinhaVotacao(campos);
+            });
 
             // Gerar relatórios
             GeradorRelatorio gerador = new GeradorRelatorio(processador);
