@@ -70,8 +70,7 @@ Número de vagas: 21										   |	Número de vagas: 0
 12 - PRD - 25, 3.237 votos (3.185 nominais e 52 de legenda), 0 candidato eleito			   <
 13 - PSB - 40, 2.738 votos (2.552 nominais e 186 de legenda), 0 candidato eleito		   <
 14 - PSD - 55, 2.495 votos (2.415 nominais e 80 de legenda), 0 candidato eleito			   <
-15 - CIDADANIA - 23, 2.417 v1
-1otos (2.372 nominais e 45 de legenda), 0 candidato eleito		   <
+15 - CIDADANIA - 23, 2.417 votos (2.372 nominais e 45 de legenda), 0 candidato eleito		   <
 16 - PC do B - 65, 2.178 votos (2.142 nominais e 36 de legenda), 0 candidato eleito		   <
 17 - REDE - 18, 1.560 votos (1.528 nominais e 32 de legenda), 0 candidato eleito		   <
 18 - PSOL - 50, 1.216 votos (1.189 nominais e 27 de legenda), 0 candidato eleito		   <
@@ -206,20 +205,10 @@ Total de votos de legenda: 982 (4,50%)								   <
 23 - PSDB - 45, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito				   <
 24 - AVANTE - 70, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito				   <
 25 - SOLIDARIEDADE - 77, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito			   <
-      Idade < 30: 3 (17,65%)									   |	Idade < 30: 3 (17.65%)
-30 <= Idade < 40: 3 (17,65%)									   |	30 <= Idade < 40: 3 (17.65%)
-40 <= Idade < 50: 4 (23,53%)									   |	40 <= Idade < 50: 4 (23.53%)
-50 <= Idade < 60: 6 (35,29%)									   |	50 <= Idade < 60: 6 (35.29%)
-60 <= Idade     : 1 (5,88%)									   |	60 <= Idade: 1 (5.88%)
-Feminino:  4 (23,53%)										   |	Feminino: 4 (23.53%)
-Masculino: 13 (76,47%)										   |	Masculino: 13 (76.47%)
+Total de votos válidos:    70.300								   |	Total de votos válidos: 70.292
+Total de votos nominais:   68.363 (97,24%)							   |	Total de votos nominais: 68.363 (97,26%)
+Total de votos de legenda: 1.937 (2,76%)							   |	Total de votos de legenda: 1.929 (2,74%)
 												   <
-Total de votos válidos:    70.300								   <
-Total de votos nominais:   68.363 (97,24%)							   <
-Total de votos de legenda: 1.937 (2,76%)							   <
-												   >	Total de votos válidos: 70.292
-												   >	Total de votos nominais: 68.363 (97.26%)
-												   >	Total de votos de legenda: 1.929 (2.74%)
 
 [I] Testando vereadores-project: +- teste ES57053
 [E] Testando vereadores-project: |  teste ES57053, diferenças (professor <- -> aluno):
@@ -231,16 +220,6 @@ Total de votos de legenda: 1.937 (2,76%)							   <
 23 - PSDB - 45, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito				   <
 24 - PSD - 55, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito				   <
 25 - AVANTE - 70, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito				   <
-      Idade < 30: 0 (0,00%)									   |	Idade < 30: 0 (0.00%)
-30 <= Idade < 40: 6 (28,57%)									   |	30 <= Idade < 40: 6 (28.57%)
-40 <= Idade < 50: 8 (38,10%)									   |	40 <= Idade < 50: 8 (38.10%)
-50 <= Idade < 60: 4 (19,05%)									   |	50 <= Idade < 60: 4 (19.05%)
-60 <= Idade     : 3 (14,29%)									   |	60 <= Idade: 3 (14.29%)
-Feminino:  3 (14,29%)										   |	Feminino: 3 (14.29%)
-Masculino: 18 (85,71%)										   |	Masculino: 18 (85.71%)
-Total de votos nominais:   178.131 (96,65%)							   |	Total de votos nominais: 178.131 (96.65%)
-Total de votos de legenda: 6.167 (3,35%)							   |	Total de votos de legenda: 6.167 (3.35%)
-												   <
 
 [I] Testando vereadores-project: +- teste PE25810
 [E] Testando vereadores-project: |  teste PE25810, diferenças (professor <- -> aluno):
@@ -268,20 +247,10 @@ Total de votos de legenda: 6.167 (3,35%)							   |	Total de votos de legenda: 6
 28 - SOLIDARIEDADE - 77, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito			   <
 29 - UP - 80, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito				   <
 5 - PSD - 55, JUNHÃO LINS (55666, 821 votos) / ERASMO (55222, 1 voto)				   |	5 - PSD - 55, JUNHÃO LINS (55666, 821 votos) / ERASMO (55222, 1 votos)
-      Idade < 30: 0 (0,00%)									   |	Idade < 30: 0 (0.00%)
-30 <= Idade < 40: 3 (23,08%)									   |	30 <= Idade < 40: 3 (23.08%)
-40 <= Idade < 50: 4 (30,77%)									   |	40 <= Idade < 50: 4 (30.77%)
-50 <= Idade < 60: 2 (15,38%)									   |	50 <= Idade < 60: 2 (15.38%)
-60 <= Idade     : 4 (30,77%)									   |	60 <= Idade: 4 (30.77%)
-Feminino:  1 (7,69%)										   |	Feminino: 1 (7.69%)
-Masculino: 12 (92,31%)										   |	Masculino: 12 (92.31%)
+Total de votos válidos:    20.498								   |	Total de votos válidos: 20.490
+Total de votos nominais:   19.871 (96,94%)							   |	Total de votos nominais: 19.871 (96,98%)
+Total de votos de legenda: 627 (3,06%)								   |	Total de votos de legenda: 619 (3,02%)
 												   <
-Total de votos válidos:    20.498								   <
-Total de votos nominais:   19.871 (96,94%)							   <
-Total de votos de legenda: 627 (3,06%)								   <
-												   >	Total de votos válidos: 20.490
-												   >	Total de votos nominais: 19.871 (96.98%)
-												   >	Total de votos de legenda: 619 (3.02%)
 
 [I] Testando vereadores-project: +- teste PE26298
 [E] Testando vereadores-project: |  teste PE26298, diferenças (professor <- -> aluno):
@@ -297,16 +266,6 @@ Total de votos de legenda: 627 (3,06%)								   <
 29 - UP - 80, 0 voto (0 nominal e 0 de legenda), 0 candidato eleito				   <
 17 - DC - 27, CHARLES CALIXTO (27777, 147 votos) / PROFESSOR EVENALDO (27075, 0 voto)		   |	17 - DC - 27, CHARLES CALIXTO (27777, 147 votos) / NEY OLIVEIRA (27890, 5 votos)
 18 - PRD - 25, ARÃO AMIGÃO (25555, 116 votos) / RICK LIRA (25025, 1 voto)			   |	18 - PRD - 25, ARÃO AMIGÃO (25555, 116 votos) / RICK LIRA (25025, 1 votos)
-      Idade < 30: 2 (15,38%)									   |	Idade < 30: 2 (15.38%)
-30 <= Idade < 40: 4 (30,77%)									   |	30 <= Idade < 40: 4 (30.77%)
-40 <= Idade < 50: 3 (23,08%)									   |	40 <= Idade < 50: 3 (23.08%)
-50 <= Idade < 60: 4 (30,77%)									   |	50 <= Idade < 60: 4 (30.77%)
-60 <= Idade     : 0 (0,00%)									   |	60 <= Idade: 0 (0.00%)
-Feminino:  3 (23,08%)										   |	Feminino: 3 (23.08%)
-Masculino: 10 (76,92%)										   |	Masculino: 10 (76.92%)
-Total de votos nominais:   93.861 (96,79%)							   |	Total de votos nominais: 93.861 (96.79%)
-Total de votos de legenda: 3.113 (3,21%)							   |	Total de votos de legenda: 3.113 (3.21%)
-												   <
 
 [I] Testando vereadores-project: +- teste PE26310
 [E] Testando vereadores-project: |  teste PE26310, diferenças (professor <- -> aluno):
@@ -324,20 +283,10 @@ Total de votos de legenda: 3.113 (3,21%)							   |	Total de votos de legenda: 3
 13 - PP - 11, ENEAS DE FREITAS (11222, 90 votos) / NALVA BELA (11069, 0 voto)			   |	13 - PP - 11, ENEAS DE FREITAS (11222, 90 votos) / CEMA (11000, 4 votos)
 15 - MOBILIZA - 33, BETO MOVEIS (33333, 67 votos) / VERA LUCIA (33777, 1 voto)			   |	15 - MOBILIZA - 33, BETO MOVEIS (33333, 67 votos) / VERA LUCIA (33777, 1 votos)
 18 - PSOL - 50, ARLENE (50333, 47 votos) / ULISSES SILVA (50000, 1 voto)			   |	18 - PSOL - 50, ARLENE (50333, 47 votos) / ULISSES SILVA (50000, 1 votos)
-      Idade < 30: 1 (7,69%)									   |	Idade < 30: 1 (7.69%)
-30 <= Idade < 40: 3 (23,08%)									   |	30 <= Idade < 40: 3 (23.08%)
-40 <= Idade < 50: 2 (15,38%)									   |	40 <= Idade < 50: 2 (15.38%)
-50 <= Idade < 60: 5 (38,46%)									   |	50 <= Idade < 60: 5 (38.46%)
-60 <= Idade     : 2 (15,38%)									   |	60 <= Idade: 2 (15.38%)
-Feminino:  2 (15,38%)										   |	Feminino: 2 (15.38%)
-Masculino: 11 (84,62%)										   |	Masculino: 11 (84.62%)
+Total de votos válidos:    62.889								   |	Total de votos válidos: 62.871
+Total de votos nominais:   61.256 (97,40%)							   |	Total de votos nominais: 61.256 (97,43%)
+Total de votos de legenda: 1.633 (2,60%)							   |	Total de votos de legenda: 1.615 (2,57%)
 												   <
-Total de votos válidos:    62.889								   <
-Total de votos nominais:   61.256 (97,40%)							   <
-Total de votos de legenda: 1.633 (2,60%)							   <
-												   >	Total de votos válidos: 62.871
-												   >	Total de votos nominais: 61.256 (97.43%)
-												   >	Total de votos de legenda: 1.615 (2.57%)
 
 [I] Testando vereadores-project: +- pronto!
 
