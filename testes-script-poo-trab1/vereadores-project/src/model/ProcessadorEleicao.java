@@ -99,7 +99,7 @@ public class ProcessadorEleicao {
         // Processa candidato
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataNascimento = LocalDate.parse(campos[DT_NASCIMENTO], formatter);
-        Genero genero = Genero.fromCodigo(Integer.parseInt(campos[CD_GENERO]));
+        int codigoGenero = Integer.parseInt(campos[CD_GENERO]);
         int numeroFederacao = Integer.parseInt(campos[NR_FEDERACAO]);
     
         Candidato candidato = new Candidato(
@@ -107,7 +107,7 @@ public class ProcessadorEleicao {
             campos[NM_URNA_CANDIDATO], // nome urna
             partido,                   // partido
             dataNascimento,            // data nascimento
-            genero,                    // gênero
+            codigoGenero,                    // gênero
             numeroFederacao            // número federação
         );
     

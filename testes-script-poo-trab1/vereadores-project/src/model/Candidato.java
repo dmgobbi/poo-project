@@ -12,20 +12,20 @@ public class Candidato {
     private final LocalDate dataNascimento;
     private int votosNominais;
     private boolean eleito;
-    private final Genero genero;
+    private final int codigoGenero;
     private final int numeroFederacao;
 
     public Candidato(String numero, 
                     String nomeUrna, 
                     Partido partido, 
                     LocalDate dataNascimento,
-                    Genero genero, 
+                    int codigoGenero,
                     int numeroFederacao) {
         this.numero = numero;
         this.nomeUrna = nomeUrna;
         this.partido = partido;
         this.dataNascimento = dataNascimento;
-        this.genero = genero;
+        this.codigoGenero = codigoGenero;
         this.numeroFederacao = numeroFederacao;
         this.votosNominais = 0;
         this.eleito = false;
@@ -72,8 +72,8 @@ public class Candidato {
         this.eleito = eleito;
     }
 
-    public Genero getGenero() {
-        return genero;
+    public int getCodigoGenero() {
+        return codigoGenero;
     }
 
     public int getNumeroFederacao() {

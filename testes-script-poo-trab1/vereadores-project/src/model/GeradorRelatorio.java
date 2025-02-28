@@ -195,8 +195,8 @@ public class GeradorRelatorio {
         System.out.println("Eleitos, por gênero:");
         
         List<Candidato> eleitos = processador.getCandidatosEleitos();
-        long mulheres = eleitos.stream().filter(c -> c.getGenero() == Genero.FEMININO).count();
-        long homens = eleitos.stream().filter(c -> c.getGenero() == Genero.MASCULINO).count();
+        long mulheres = eleitos.stream().filter(c -> c.getCodigoGenero() == 4).count();
+        long homens = eleitos.stream().filter(c -> c.getCodigoGenero() == 2).count();
         double total = eleitos.size();
         
         Locale localeBR = Locale.forLanguageTag("pt-BR");

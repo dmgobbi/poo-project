@@ -2,7 +2,7 @@
 SRC_DIR = src
 BIN_DIR = bin
 MODEL_DIR = $(SRC_DIR)/model
-COMP_DIR = $(SRC_DIR)/comparators
+COMP_DIR = $(SRC_DIR)/comparator
 
 # Comandos
 JAVAC = javac
@@ -46,12 +46,8 @@ run: jar
 
 # Example usage: make run ARGS="13 candidatos.csv votacao.csv 15/11/2020"
 
-## consertando ##
-
-# make run ARGS="1473 ../testes/AC1473/in/candidatos.csv ../testes/AC1473/in/votacao.csv 06/10/2024" > myoutput.txt
-# diff myoutput.txt ../testes/AC1473/out/output.txt
-
 ## tudo ok ##
+
 # make run ARGS="1392 ../testes/AC1392/in/candidatos.csv ../testes/AC1392/in/votacao.csv 06/10/2024" > myoutput.txt
 # diff myoutput.txt ../testes/AC1392/out/output.txt
 
@@ -69,3 +65,6 @@ run: jar
 
 # make run ARGS="26310 ../testes/PE26310/in/candidatos.csv ../testes/PE26310/in/votacao.csv 06/10/2024" > myoutput.txt
 # diff myoutput.txt ../testes/PE26310/out/output.txt
+
+# make run ARGS="1473 ../testes/AC1473/in/candidatos.csv ../testes/AC1473/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/AC1473/out/output.txt
