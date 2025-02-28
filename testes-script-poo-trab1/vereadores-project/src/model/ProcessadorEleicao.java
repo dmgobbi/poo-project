@@ -50,8 +50,40 @@ public class ProcessadorEleicao {
         this.totalVotosNominais = 0;
         this.totalVotosLegenda = 0;
     }
+
+    // Helper method to normalize municipality codes
+    private String normalizeMunicipalityCode(String code) {
+        try {
+            return Integer.toString(Integer.parseInt(code));
+        } catch (NumberFormatException e) {
+            return code;
+        }
+    }
+
     public void processarLinhaCandidato(String[] campos) {
-        if (!campos[SG_UE].equals(codigoMunicipio) || !campos[CD_CARGO].equals(CARGO_VEREADOR)) {
+        // Sempre carrega as informações do partido, independente do município/cargo
+        if (campos.length > NR_PARTIDO && campos.length > SG_PARTIDO) {
+            try {
+                int numeroPartido = Integer.parseInt(campos[NR_PARTIDO]);
+                String siglaPartido = campos[SG_PARTIDO];
+                
+                // Adiciona ao mapa de partidos se ainda não existir
+                partidos.computeIfAbsent(
+                    String.valueOf(numeroPartido),
+                    k -> new Partido(numeroPartido, siglaPartido)
+                );
+            } catch (NumberFormatException e) {
+                // Ignora linhas com dados inválidos
+                System.err.println("Erro ao converter número do partido: " + campos[NR_PARTIDO]);
+            }
+        }
+
+        // Normaliza os códigos antes da comparação
+        String codigoMunicipioNormalizado = normalizeMunicipalityCode(codigoMunicipio);
+        String codigoArquivoNormalizado = campos.length > SG_UE ? normalizeMunicipalityCode(campos[SG_UE]) : "";
+
+        // Continua com o processamento normal para candidatos do município e cargo específicos
+        if (!codigoArquivoNormalizado.equals(codigoMunicipioNormalizado) || !campos[CD_CARGO].equals(CARGO_VEREADOR)) {
             return; // Ignora registros de outros municípios ou cargos
         }
         
@@ -59,15 +91,11 @@ public class ProcessadorEleicao {
         if (campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_INVALIDO)) {
             return;
         }
-        
-        // Processa partido
-        int numeroPartido = Integer.parseInt(campos[NR_PARTIDO]);
-        String siglaPartido = campos[SG_PARTIDO];
-        Partido partido = partidos.computeIfAbsent(
-            String.valueOf(numeroPartido),
-            k -> new Partido(numeroPartido, siglaPartido)
-        );
-        
+    
+        // Processa o partido já carregado anteriormente
+        String numeroPartidoStr = campos[NR_PARTIDO];
+        Partido partido = partidos.get(numeroPartidoStr);
+             
         // Processa candidato
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dataNascimento = LocalDate.parse(campos[DT_NASCIMENTO], formatter);
@@ -93,7 +121,11 @@ public class ProcessadorEleicao {
     }
     
     public void processarLinhaVotacao(String[] campos) {
-        if (!campos[CD_MUNICIPIO].equals(codigoMunicipio) || !campos[CD_CARGO_VOTACAO].equals(CARGO_VEREADOR)) {
+        // Normaliza os códigos antes da comparação
+        String codigoMunicipioNormalizado = normalizeMunicipalityCode(codigoMunicipio);
+        String codigoArquivoNormalizado = campos.length > CD_MUNICIPIO ? normalizeMunicipalityCode(campos[CD_MUNICIPIO]) : "";
+
+        if (!codigoArquivoNormalizado.equals(codigoMunicipioNormalizado) || !campos[CD_CARGO_VOTACAO].equals(CARGO_VEREADOR)) {
             return; // Ignora registros de outros municípios ou cargos
         }
         

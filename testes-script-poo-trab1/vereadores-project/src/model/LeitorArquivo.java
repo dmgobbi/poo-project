@@ -1,7 +1,10 @@
 package model;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class LeitorArquivo {
     private static final String ENCODING = "ISO-8859-1";
@@ -36,10 +39,8 @@ public class LeitorArquivo {
     }
 
     public void validarArquivo(String filepath) throws Exception {
-        try (FileInputStream fis = new FileInputStream(filepath)) {
-            // Apenas verifica se o arquivo existe e pode ser aberto
-        } catch (Exception e) {
-            throw new Exception("Erro ao acessar arquivo: " + filepath, e);
+        if (!Files.exists(Paths.get(filepath))) {
+            throw new Exception("Arquivo não encontrado: " + filepath);
         }
     }
 }

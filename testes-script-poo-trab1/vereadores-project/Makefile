@@ -28,7 +28,7 @@ $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
 compile: $(BIN_DIR)
-	@$(JAVAC) -d $(BIN_DIR) $(SOURCES)
+	@$(JAVAC) -Xlint -d $(BIN_DIR) $(SOURCES)
 
 $(MANIFEST):
 	@echo "Main-Class: Main" > $(MANIFEST)
@@ -41,7 +41,31 @@ clean:
 	$(RM) $(JAR_NAME)
 	$(RM) $(MANIFEST)
 
-# Example usage: make run ARGS="13 candidatos.csv votacao.csv 15/11/2020"
-# Another example: make run ARGS="57053 ../testes/ES57053/in/candidatos.csv ../testes/ES57053/in/votacao.csv 06/10/2024" > myoutput.txt
 run: jar
 	@$(JAVA) -jar $(JAR_NAME) $(ARGS)
+
+# Example usage: make run ARGS="13 candidatos.csv votacao.csv 15/11/2020"
+
+## consertando ##
+
+# make run ARGS="1473 ../testes/AC1473/in/candidatos.csv ../testes/AC1473/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/AC1473/out/output.txt
+
+## tudo ok ##
+# make run ARGS="1392 ../testes/AC1392/in/candidatos.csv ../testes/AC1392/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/AC1392/out/output.txt
+
+# make run ARGS="57053 ../testes/ES57053/in/candidatos.csv ../testes/ES57053/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/ES57053/out/output.txt 
+
+# make run ARGS="56472 ../testes/ES56472/in/candidatos.csv ../testes/ES56472/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/ES56472/out/output.txt
+
+# make run ARGS="25810 ../testes/PE25810/in/candidatos.csv ../testes/PE25810/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/PE25810/out/output.txt
+
+# make run ARGS="26298 ../testes/PE26298/in/candidatos.csv ../testes/PE26298/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/PE26298/out/output.txt
+
+# make run ARGS="26310 ../testes/PE26310/in/candidatos.csv ../testes/PE26310/in/votacao.csv 06/10/2024" > myoutput.txt
+# diff myoutput.txt ../testes/PE26310/out/output.txt
