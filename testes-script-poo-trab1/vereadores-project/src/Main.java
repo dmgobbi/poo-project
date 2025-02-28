@@ -4,6 +4,8 @@ import model.GeradorRelatorio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+// LET THE COMMENTS IN YOUR CODE UNTIL THE 'RELATORIO' IS READY. AFTER THAT YOU SHOULD REMOVE ALL COMMENT LINES. THE CODE IS TOO SIMPLE AND STRAIGTH FORWARD FOR IT
+
 public class Main {
     public static void main(String[] args) {
         if (args.length != 4) {

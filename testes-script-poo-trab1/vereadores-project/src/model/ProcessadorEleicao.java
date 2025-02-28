@@ -33,7 +33,7 @@ public class ProcessadorEleicao {
     private static final String VOTO_BRANCO = "95";
     private static final String VOTO_NULO = "96";
     private static final String VOTO_ANULADO_97 = "97";
-    private static final String VOTO_ANULADO_98 = "98"; // verificar na documentacao
+    private static final String VOTO_ANULADO_98 = "98";
 
     private final String codigoMunicipio;
     private final LocalDate dataEleicao;

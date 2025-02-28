@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Locale;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.text.DecimalFormatSymbols;
+import comparator.CandidatoPorVotosComparator;
+import comparator.PartidoPorVotosComparator;
 
 public class GeradorRelatorio {
     private final ProcessadorEleicao processador;
@@ -40,8 +41,7 @@ public class GeradorRelatorio {
     private void gerarVereadoresEleitos() {
         System.out.println("Vereadores eleitos:");
         List<Candidato> eleitos = processador.getCandidatosEleitos().stream()
-            .sorted(Comparator.comparing(Candidato::getVotosNominais).reversed()
-                .thenComparing(Candidato::getDataNascimento))
+            .sorted(new CandidatoPorVotosComparator())
             .toList();
 
         for (int i = 0; i < eleitos.size(); i++) {
@@ -56,8 +56,7 @@ public class GeradorRelatorio {
         int numVagas = processador.getCandidatosEleitos().size();
         
         List<Candidato> maisVotados = processador.getCandidatos().values().stream()
-            .sorted(Comparator.comparing(Candidato::getVotosNominais).reversed()
-                .thenComparing(Candidato::getDataNascimento))
+            .sorted(new CandidatoPorVotosComparator())
             .limit(numVagas)
             .toList();
 
@@ -74,8 +73,7 @@ public class GeradorRelatorio {
         
         int numVagas = processador.getCandidatosEleitos().size();
         List<Candidato> todosOrdenados = processador.getCandidatos().values().stream()
-            .sorted(Comparator.comparing(Candidato::getVotosNominais).reversed()
-                .thenComparing(Candidato::getDataNascimento))
+            .sorted(new CandidatoPorVotosComparator())
             .toList();
 
         for (int i = 0; i < numVagas; i++) {
@@ -92,8 +90,7 @@ public class GeradorRelatorio {
         System.out.println("(com sua posição no ranking de mais votados)");
         
         List<Candidato> todosOrdenados = processador.getCandidatos().values().stream()
-            .sorted(Comparator.comparing(Candidato::getVotosNominais).reversed()
-                .thenComparing(Candidato::getDataNascimento))
+            .sorted(new CandidatoPorVotosComparator())
             .toList();
 
         int numVagas = processador.getCandidatosEleitos().size();
@@ -134,32 +131,14 @@ public class GeradorRelatorio {
         System.out.println("Primeiro e último colocados de cada partido:");
         
         List<Partido> partidosComVotos = processador.getPartidos().values().stream()
-            .filter(p -> {
-                return p.getCandidatos().stream()
-                    .anyMatch(c -> c.getVotosNominais() > 0);
-            })
-            .sorted((p1, p2) -> {
-                int maxVotosP1 = p1.getCandidatos().stream()
-                    .mapToInt(Candidato::getVotosNominais)
-                    .max()
-                    .orElse(0);
-                int maxVotosP2 = p2.getCandidatos().stream()
-                    .mapToInt(Candidato::getVotosNominais)
-                    .max()
-                    .orElse(0);
-                int compare = Integer.compare(maxVotosP2, maxVotosP1);
-                if (compare == 0) {
-                    return Integer.compare(p1.getNumero(), p2.getNumero());
-                }
-                return compare;
-            })
+            .filter(p -> p.getCandidatos().stream().anyMatch(c -> c.getVotosNominais() > 0))
+            .sorted(new PartidoPorVotosComparator())
             .toList();
 
         for (int i = 0; i < partidosComVotos.size(); i++) {
             Partido p = partidosComVotos.get(i);
             List<Candidato> candidatosOrdenados = p.getCandidatos().stream()
-                .sorted(Comparator.comparing(Candidato::getVotosNominais).reversed()
-                    .thenComparing(Candidato::getDataNascimento))
+                .sorted(new CandidatoPorVotosComparator())
                 .toList();
 
             if (!candidatosOrdenados.isEmpty()) {
