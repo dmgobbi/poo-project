@@ -19,28 +19,25 @@ public class LeitorArquivo {
                 new InputStreamReader(
                     new FileInputStream(filepath), ENCODING))) {
             
-            // Pula o cabeçalho
             String linha = br.readLine();
             
             while ((linha = br.readLine()) != null) {
-                // Remove aspas duplas e divide pelo separador
                 linha = linha.replace("\"", "");
                 String[] campos = linha.split(SEPARATOR);
                 
-                // Faz trim em todos os campos
                 for (int i = 0; i < campos.length; i++) {
                     campos[i] = campos[i].trim();
                 }
                 
                 callback.processarLinha(campos);
-                linha = null; // ajuda o GC
+                linha = null;
             }
         }
     }
 
     public void validarArquivo(String filepath) throws Exception {
         if (!Files.exists(Paths.get(filepath))) {
-            throw new Exception("Arquivo não encontrado: " + filepath);
+            throw new Exception("Arquivo nao encontrado: " + filepath);
         }
     }
 }

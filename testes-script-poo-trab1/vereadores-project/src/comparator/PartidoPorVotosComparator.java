@@ -19,7 +19,7 @@ public class PartidoPorVotosComparator implements Comparator<Partido> {
         
         int comparacaoVotos = Integer.compare(maxVotosP2, maxVotosP1);
         if (comparacaoVotos == 0) {
-            // Desempate por número do partido
+            // Desempate por numero do partido
             return Integer.compare(p1.getNumero(), p2.getNumero());
         }
         return comparacaoVotos;

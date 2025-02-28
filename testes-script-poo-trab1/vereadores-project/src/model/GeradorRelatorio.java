@@ -175,7 +175,7 @@ public class GeradorRelatorio {
             if (idade < 30) menos30++;
             else if (idade < 40) entre30e40++;
             else if (idade < 50) entre40e50++;
-            else if (idade < 60) entre50e60++; // Fixed duplicate condition
+            else if (idade < 60) entre50e60++;
             else mais60++;
         }
         

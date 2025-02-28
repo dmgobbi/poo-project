@@ -43,7 +43,6 @@ public class Candidato {
         return this.numeroFederacao != -1;
     }
 
-    // Getters
     public String getNumero() {
         return numero;
     }

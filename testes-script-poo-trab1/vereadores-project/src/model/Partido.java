@@ -45,7 +45,6 @@ public class Partido {
         return Collections.unmodifiableList(candidatos);
     }
 
-    // Getters
     public int getNumero() {
         return numero;
     }

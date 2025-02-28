@@ -17,13 +17,13 @@ public class ProcessadorEleicao {
     private static final int CD_GENERO = 38;
     private static final int CD_SIT_TOT_TURNO = 48;
 
-    // Valores específicos para validação
+    // Valores especificos para validacao
     private static final String CARGO_VEREADOR = "13";
     private static final String CANDIDATO_INVALIDO = "-1";
     private static final String CANDIDATO_ELEITO = "2";
     private static final String CANDIDATO_ELEITO_MEDIA = "3";
 
-    // Constantes para colunas do arquivo de votação
+    // Constantes para colunas do arquivo de votacao
     private static final int CD_MUNICIPIO = 13;
     private static final int CD_CARGO_VOTACAO = 17;
     private static final int NR_VOTAVEL = 19;
@@ -51,8 +51,7 @@ public class ProcessadorEleicao {
         this.totalVotosLegenda = 0;
     }
 
-    // Helper method to normalize municipality codes
-    private String normalizeMunicipalityCode(String code) {
+    private String normalizarCodigoMunicipio(String code) {
         try {
             return Integer.toString(Integer.parseInt(code));
         } catch (NumberFormatException e) {
@@ -61,38 +60,33 @@ public class ProcessadorEleicao {
     }
 
     public void processarLinhaCandidato(String[] campos) {
-        // Sempre carrega as informações do partido, independente do município/cargo
+        // Sempre carrega as informacoes do partido, independente do municipio/cargo
         if (campos.length > NR_PARTIDO && campos.length > SG_PARTIDO) {
             try {
                 int numeroPartido = Integer.parseInt(campos[NR_PARTIDO]);
                 String siglaPartido = campos[SG_PARTIDO];
                 
-                // Adiciona ao mapa de partidos se ainda não existir
                 partidos.computeIfAbsent(
                     String.valueOf(numeroPartido),
                     k -> new Partido(numeroPartido, siglaPartido)
                 );
             } catch (NumberFormatException e) {
-                // Ignora linhas com dados inválidos
-                System.err.println("Erro ao converter número do partido: " + campos[NR_PARTIDO]);
+                System.err.println("Erro ao converter numero do partido: " + campos[NR_PARTIDO]);
             }
         }
 
-        // Normaliza os códigos antes da comparação
-        String codigoMunicipioNormalizado = normalizeMunicipalityCode(codigoMunicipio);
-        String codigoArquivoNormalizado = campos.length > SG_UE ? normalizeMunicipalityCode(campos[SG_UE]) : "";
+        String codigoMunicipioNormalizado = normalizarCodigoMunicipio(codigoMunicipio);
+        String codigoArquivoNormalizado = campos.length > SG_UE ? normalizarCodigoMunicipio(campos[SG_UE]) : "";
 
-        // Continua com o processamento normal para candidatos do município e cargo específicos
         if (!codigoArquivoNormalizado.equals(codigoMunicipioNormalizado) || !campos[CD_CARGO].equals(CARGO_VEREADOR)) {
-            return; // Ignora registros de outros municípios ou cargos
+            return;
         }
         
-        // Ignora candidatos com situação inválida
         if (campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_INVALIDO)) {
             return;
         }
     
-        // Processa o partido já carregado anteriormente
+        // Processa o partido ja carregado anteriormente
         String numeroPartidoStr = campos[NR_PARTIDO];
         Partido partido = partidos.get(numeroPartidoStr);
              
@@ -103,42 +97,37 @@ public class ProcessadorEleicao {
         int numeroFederacao = Integer.parseInt(campos[NR_FEDERACAO]);
     
         Candidato candidato = new Candidato(
-            campos[NR_CANDIDATO],      // número candidato
-            campos[NM_URNA_CANDIDATO], // nome urna
-            partido,                   // partido
-            dataNascimento,            // data nascimento
-            codigoGenero,                    // gênero
-            numeroFederacao            // número federação
+            campos[NR_CANDIDATO],
+            campos[NM_URNA_CANDIDATO],
+            partido,
+            dataNascimento, 
+            codigoGenero,
+            numeroFederacao
         );
     
         partido.addCandidato(candidato);
         candidatos.put(candidato.getNumero(), candidato);
         
-        // Define se foi eleito
-        boolean eleito = campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO) || 
-                         campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO_MEDIA);
+        boolean eleito = campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO) || campos[CD_SIT_TOT_TURNO].equals(CANDIDATO_ELEITO_MEDIA);
         candidato.setEleito(eleito);
     }
     
     public void processarLinhaVotacao(String[] campos) {
-        // Normaliza os códigos antes da comparação
-        String codigoMunicipioNormalizado = normalizeMunicipalityCode(codigoMunicipio);
-        String codigoArquivoNormalizado = campos.length > CD_MUNICIPIO ? normalizeMunicipalityCode(campos[CD_MUNICIPIO]) : "";
+        String codigoMunicipioNormalizado = normalizarCodigoMunicipio(codigoMunicipio);
+        String codigoArquivoNormalizado = campos.length > CD_MUNICIPIO ? normalizarCodigoMunicipio(campos[CD_MUNICIPIO]) : "";
 
         if (!codigoArquivoNormalizado.equals(codigoMunicipioNormalizado) || !campos[CD_CARGO_VOTACAO].equals(CARGO_VEREADOR)) {
-            return; // Ignora registros de outros municípios ou cargos
+            return;
         }
         
         String numeroVotavel = campos[NR_VOTAVEL];
         int qtdVotos = Integer.parseInt(campos[QT_VOTOS]);
         
-        // Ignora votos brancos/nulos
         if (numeroVotavel.equals(VOTO_BRANCO) || numeroVotavel.equals(VOTO_NULO) || 
             numeroVotavel.equals(VOTO_ANULADO_97) || numeroVotavel.equals(VOTO_ANULADO_98)) {
             return;
         }
         
-        // Verifica se é voto de legenda (2 dígitos) ou nominal (5 dígitos)
         if (numeroVotavel.length() == 2) {
             Partido partido = partidos.get(numeroVotavel);
             if (partido != null) {
@@ -155,7 +144,6 @@ public class ProcessadorEleicao {
         }
     }
     
-    // Getters úteis para relatórios
     public int getTotalVotosValidos() {
         return totalVotosNominais + totalVotosLegenda;
     }

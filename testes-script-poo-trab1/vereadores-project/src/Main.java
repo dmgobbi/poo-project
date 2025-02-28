@@ -4,8 +4,6 @@ import model.GeradorRelatorio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-// LET THE COMMENTS IN YOUR CODE UNTIL THE 'RELATORIO' IS READY. AFTER THAT YOU SHOULD REMOVE ALL COMMENT LINES. THE CODE IS TOO SIMPLE AND STRAIGTH FORWARD FOR IT
-
 public class Main {
     public static void main(String[] args) {
         if (args.length != 4) {
@@ -18,36 +16,29 @@ public class Main {
             String arquivoCandidatos = args[1];
             String arquivoVotacao = args[2];
             
-            // Converter a data da eleição para LocalDate
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataEleicao = LocalDate.parse(args[3], formatter);
 
-            // Criar instância do leitor de arquivos
             LeitorArquivo leitor = new LeitorArquivo();
 
-            // Validar arquivos
             leitor.validarArquivo(arquivoCandidatos);
             leitor.validarArquivo(arquivoVotacao);
 
-            // Criar processador de eleição
             ProcessadorEleicao processador = new ProcessadorEleicao(codigoMunicipio, dataEleicao);
 
-            // Ler e processar arquivo de candidatos
             leitor.processarCSV(arquivoCandidatos, campos -> {
                 processador.processarLinhaCandidato(campos);
             });
 
-            // Ler e processar arquivo de votação
             leitor.processarCSV(arquivoVotacao, campos -> {
                 processador.processarLinhaVotacao(campos);
             });
 
-            // Gerar relatórios
             GeradorRelatorio gerador = new GeradorRelatorio(processador);
             gerador.gerarRelatorioCompleto();
 
         } catch (Exception e) {
-            System.err.println("Erro durante a execução: " + e.getMessage());
+            System.err.println("Erro durante a execucao: " + e.getMessage());
             e.printStackTrace();
             System.exit(1);
         }
