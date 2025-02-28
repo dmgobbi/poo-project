@@ -134,7 +134,10 @@ public class GeradorRelatorio {
         System.out.println("Primeiro e último colocados de cada partido:");
         
         List<Partido> partidosComVotos = processador.getPartidos().values().stream()
-            .filter(p -> p.getVotosTotais() > 0)
+            .filter(p -> {
+                return p.getCandidatos().stream()
+                    .anyMatch(c -> c.getVotosNominais() > 0);
+            })
             .sorted((p1, p2) -> {
                 int maxVotosP1 = p1.getCandidatos().stream()
                     .mapToInt(Candidato::getVotosNominais)

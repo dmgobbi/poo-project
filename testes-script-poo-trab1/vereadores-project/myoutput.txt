@@ -77,7 +77,6 @@ Primeiro e último colocados de cada partido:
 11 - PL - 22, JOÃO MOREIRA (22444, 222 votos) / LOUISE MELO (22333, 14 votos)
 12 - UNIÃO - 44, EDMAR RODRIGUES (44123, 211 votos) / DORA (44111, 0 voto)
 13 - SOLIDARIEDADE - 77, ISAIAS DUARTE (77250, 72 votos) / JESUS ROCHA (77111, 3 votos)
-16 - PSOL - 50, ALEMÃO (50444, 0 voto) / ALEMÃO (50444, 0 voto)
 
 Eleitos, por faixa etária (na data da eleição):
       Idade < 30: 0 (0,00%)
